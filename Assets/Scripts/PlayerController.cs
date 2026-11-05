@@ -3,16 +3,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerTurret turret;
-    public GameObject baseMovement;
+    public PlayerTurret[] primaryTurrets;
     public int bulletForce;
-    public Vector2 mousePosition;
+    private Vector2 mousePosition;
     public int movingVelocity;
 
     private void Update()
     {
-        turret.LookAtMouse(mousePosition);
-        
+        foreach (var t in primaryTurrets)
+        {
+            t.LookAtMouse(mousePosition);
+    }
     }
     void OnPoint(InputValue value)
     {
