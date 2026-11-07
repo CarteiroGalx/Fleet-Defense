@@ -6,20 +6,27 @@ public class TurretCannon : MonoBehaviour
 {
     private Turret turret;
     public Transform firingPoint;
-    public bool firingEnabled = false;
 
     private void Start()
     {
         turret = GetComponentInParent<Turret>();
-        StartCoroutine(FiringRoutine(turret.projectile, turret.firingInterval));
+        StartCoroutine(FiringRoutine(turret.firingInterval));
     }
-    private IEnumerator FiringRoutine(GameObject gameObject, float interval)
+
+    private IEnumerator FiringRoutine(float interval)
     {
         while (true)
         {
-            if (firingEnabled)
+            if (turret.currentTarget != null)
+            {
                 Shoot(turret.projectile);
-            yield return new WaitForSeconds(interval);
+
+                yield return new WaitForSeconds(interval);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 

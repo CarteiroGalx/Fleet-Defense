@@ -9,7 +9,6 @@ public class Turret : MonoBehaviour
     public float detectionRange = 15f;
     public float visionAngle = 160f;
     public float rotationSpeed = 90f;
-    public float fireRate = 2f;
     public float damage = 10f;
     public Transform currentTarget;
 
