@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretAiming
   currentEnemyPosition: {fileID: 0}
-  turretRotationVelocity: 5
+  rotationVelocity: 90
+  State: idle
 --- !u!1 &3638033873363871019
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretAiming
   currentEnemyPosition: {fileID: 0}
-  turretRotationVelocity: 5
+  rotationVelocity: 90
+  State: idle
 --- !u!212 &454303067227439153
 SpriteRenderer:
   serializedVersion: 2
@@ -297,5 +299,5 @@ MonoBehaviour:
   turret: {fileID: 6541655518863816125}
   cannon: {fileID: 1219891693933947872}
   searchInterval: 0.2
-  detectionRange: 10.86
-  visionAngle: 130
+  detectionRange: 20
+  visionAngle: 100
