@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour
     public int healthPoints = 10;
     public float movementVelocity = 5f;
     public float positionXToStay;
+    public float positionYToStay;
 
     private void Start()
     {
@@ -20,13 +21,16 @@ public class EnemyMovement : MonoBehaviour
         float maximumPositionX = areaToStay.position.x + areaToStay.localScale.x / 2;
         float minimumPositionX = areaToStay.position.x - areaToStay.localScale.x / 2;
         positionXToStay = Random.Range(minimumPositionX, maximumPositionX);
+        float maximumPositionY = areaToStay.position.y + areaToStay.localScale.y / 2;
+        float minimumPositionY = areaToStay.position.y - areaToStay.localScale.y / 2;
+        positionYToStay = Random.Range(minimumPositionY, maximumPositionY);
     }
 
     void Update()
     {
         transform.position = Vector3.MoveTowards(
             transform.position,
-            new Vector3(positionXToStay, transform.position.y, 0),
+            new Vector3(positionXToStay, positionYToStay, 0),
             movementVelocity * Time.deltaTime
         );
     }
