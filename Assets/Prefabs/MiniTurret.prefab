@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4134562843455100819}
   - component: {fileID: 6541655518863816125}
   m_Layer: 0
-  m_Name: TurretRotationPoint
+  m_Name: TurretPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a281b963ba4037447a373547c40b9ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretAiming
-  currentEnemyPosition: {fileID: 0}
   rotationVelocity: 90
   State: idle
 --- !u!1 &3638033873363871019
@@ -57,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2514001306102834156}
-  - component: {fileID: 7686897051671633959}
+  - component: {fileID: 1797051738590124600}
   m_Layer: 3
   m_Name: MiniTurret
   m_TagString: Untagged
@@ -82,7 +81,7 @@ Transform:
   - {fileID: 7538581536405668165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7686897051671633959
+--- !u!114 &1797051738590124600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,10 +90,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3638033873363871019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcbf8dcda88c0ee45b4a7b1e495c5bc7, type: 3}
+  m_Script: {fileID: 11500000, guid: 74053348c271d8f4b89e01044ecbf8b3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  selfTurret: {fileID: 8884408029478225170}
+  m_EditorClassIdentifier: Assembly-CSharp::Turret
+  projectile: {fileID: 790078835131405860, guid: 17117a83576e2284da2605a9a6adf387, type: 3}
+  firingInterval: 1
+  firingForce: 10
+  detectionRange: 15
+  visionAngle: 110
+  rotationSpeed: 90
+  fireRate: 2
+  damage: 10
+  currentTarget: {fileID: 0}
 --- !u!1 &4242152037921667338
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,9 +111,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7555384422479260321}
-  - component: {fileID: 6939986890839617828}
-  - component: {fileID: 454303067227439153}
   - component: {fileID: 1219891693933947872}
+  - component: {fileID: 454303067227439153}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -130,21 +136,20 @@ Transform:
   - {fileID: 8969472780529646972}
   m_Father: {fileID: 4134562843455100819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6939986890839617828
+--- !u!114 &1219891693933947872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4242152037921667338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a281b963ba4037447a373547c40b9ac8, type: 3}
+  m_Script: {fileID: 11500000, guid: a09e78213fc0fd04793256094a65122a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurretAiming
-  currentEnemyPosition: {fileID: 0}
-  rotationVelocity: 90
-  State: idle
+  m_EditorClassIdentifier: Assembly-CSharp::TurretCannon
+  firingPoint: {fileID: 8969472780529646972}
+  firingEnabled: 0
 --- !u!212 &454303067227439153
 SpriteRenderer:
   serializedVersion: 2
@@ -192,7 +197,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -374001681445685456, guid: 3b1656f5aba37474b852aa02dd9b0334, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -204,23 +209,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &1219891693933947872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4242152037921667338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a09e78213fc0fd04793256094a65122a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurretCannon
-  projectile: {fileID: 790078835131405860, guid: 17117a83576e2284da2605a9a6adf387, type: 3}
-  firingPoint: {fileID: 8969472780529646972}
-  firingInterval: 1
-  firingForce: 40.45
-  firingEnabled: 0
 --- !u!1 &4596036864909233965
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,8 +284,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca43f1779b9207a44b3cf60563640083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretVision
-  turret: {fileID: 6541655518863816125}
-  cannon: {fileID: 1219891693933947872}
   searchInterval: 0.2
-  detectionRange: 20
-  visionAngle: 100
