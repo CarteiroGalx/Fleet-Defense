@@ -106,9 +106,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   isOnLeft: 0
-  healthPoints: 10
+  healthPoints: 2
   movementVelocity: 2
   positionXToStay: 0
+  positionYToStay: 0
 --- !u!61 &-5489985298656968812
 BoxCollider2D:
   m_ObjectHideFlags: 0
