@@ -17,13 +17,17 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            GameObject enemy = Instantiate(enemyToSpawn, transform.position, transform.rotation);
-            EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
-            if (transform.position.x < 0)
-                enemyMovement.InitiateMovement(Vector2.left);
-            else
-                enemyMovement.InitiateMovement(Vector2.right);
-            yield return new WaitForSeconds(interval);
+            if (spawnEnabled)
+            {
+                GameObject enemy = Instantiate(enemyToSpawn, transform.position, transform.rotation);
+                EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
+                if (transform.position.x < 0)
+                    enemyMovement.InitiateMovement(Vector2.left);
+                else
+                    enemyMovement.InitiateMovement(Vector2.right);
+                yield return new WaitForSeconds(interval);
+            }
+            yield return null;
         }
     }
 }
