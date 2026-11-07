@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class TurretPivot : MonoBehaviour
 {
-    public Transform currentEnemyPosition;
+    private Turret turret;
     public float rotationVelocity = 90f;
     public string State = "idle";
+    private float initialAngle;
 
     private void Start()
     {
-        StartCoroutine(WaitingForEnemyRoutine(Vector2.right));
+        initialAngle = transform.eulerAngles.z;
+        turret = GetComponentInParent<Turret>();
+        StartCoroutine(WaitingForEnemyRoutine());
     }
 
     void Update()
     {
-        if (currentEnemyPosition != null)
+        if (turret.currentTarget != null)
         {
-            Vector2 direction = currentEnemyPosition.position - transform.position;
+            Vector2 direction = turret.currentTarget.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
             transform.rotation = Quaternion.RotateTowards(
@@ -26,30 +29,38 @@ public class TurretPivot : MonoBehaviour
         }
     }
 
-    public void SwitchState(string state, GameObject enemyToAttack)
+    public IEnumerator WaitingForEnemyRoutine()
     {
-        State = state;
-        switch (state)
+        while (true)
         {
-            case "idle":
-                break;
-            case "attack":
-                currentEnemyPosition.position = enemyToAttack.transform.position;
-                break;
-        }
-    }
+            if (State != "idle")
+            {
+                yield return null;
+                continue;
+            }
 
-    public IEnumerator WaitingForEnemyRoutine(Vector2 orientation)
-    {
-        while (true) 
-        {
-            Vector2 forward = orientation;
-            Quaternion randomDirection = Quaternion.Euler(0, 0, Random.Range(-30, 30));
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                randomDirection, 
-                rotationVelocity / 2 * Time.deltaTime);
-            yield return new WaitForSeconds(10f);
-         }
+            float visionAngle = turret.visionAngle;
+
+            float randomAngle = initialAngle + Random.Range(
+                -visionAngle / 2f,
+                visionAngle / 2f
+            );
+
+            Quaternion targetRotation = Quaternion.Euler(0, 0, randomAngle);
+
+            while (State == "idle" &&
+                   Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+            {
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationVelocity / 4 * Time.deltaTime
+                );
+
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(2f);
+        }
     }
 }

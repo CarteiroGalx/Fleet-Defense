@@ -4,22 +4,21 @@ using UnityEngine.Rendering;
 
 public class TurretCannon : MonoBehaviour
 {
-    public GameObject projectile;
+    private Turret turret;
     public Transform firingPoint;
-    public float firingInterval = 1f;
-    public float firingForce = 10f;
     public bool firingEnabled = false;
 
     private void Start()
     {
-        StartCoroutine(FiringRoutine(projectile, firingInterval));
+        turret = GetComponentInParent<Turret>();
+        StartCoroutine(FiringRoutine(turret.projectile, turret.firingInterval));
     }
     private IEnumerator FiringRoutine(GameObject gameObject, float interval)
     {
         while (true)
         {
             if (firingEnabled)
-                Shoot(projectile);
+                Shoot(turret.projectile);
             yield return new WaitForSeconds(interval);
         }
     }
@@ -29,6 +28,6 @@ public class TurretCannon : MonoBehaviour
         GameObject projectile = Instantiate(gameObject, firingPoint.position, firingPoint.rotation);
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
 
-        rb.linearVelocity = firingPoint.right * firingForce;
+        rb.linearVelocity = firingPoint.right * turret.firingForce;
     }
 }
